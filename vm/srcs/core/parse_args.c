@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_options.c                                    :+:      :+:    :+:   */
+/*   parse_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 08:13:53 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/20 11:29:09 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/23 16:39:54 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-#include "lemin.h"
 #include "libft.h"
 
 static int	parse_options(int *options, char *arg)
@@ -47,24 +45,6 @@ static int	parse_dump(t_vm *vm, int *ac, char ***av)
 	return (0);
 }
 
-static int	parse_n(t_vm *vm, int *ac, char ***av)
-{
-	int	id;
-	char *file;
-
-	--*ac;
-	++*av;
-	if (!ac || !ft_isbase(10, **av))
-		return (1);
-	id ft_atoi(**av);
-	--*ac;
-	++*av;
-	if (!ac)
-		return (1);
-	parse_champion(vm, id, char **av)
-	return (0);
-}
-
 static int	parse_champion(t_vm *vm, int id, char *file)
 {
 	t_champ	*champ;
@@ -75,6 +55,24 @@ static int	parse_champion(t_vm *vm, int id, char *file)
 	champ->file = file;
 	champ->next = vm->champ;
 	vm->champ = champ;
+}
+
+static int	parse_n(t_vm *vm, int *ac, char ***av)
+{
+	int	id;
+	char *file;
+
+	--*ac;
+	++*av;
+	if (!ac || !ft_isbase(10, **av))
+		return (1);
+	id = ft_atoi(**av);
+	--*ac;
+	++*av;
+	if (!ac)
+		return (1);
+	parse_champion(vm, id, **av)
+	return (0);
 }
 
 int			parse_args(t_vm *vm, int *ac, char ***av)

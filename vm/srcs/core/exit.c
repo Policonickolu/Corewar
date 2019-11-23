@@ -6,14 +6,13 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 11:29:30 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/20 11:56:58 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/23 16:37:10 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 void	vm_exit(t_vm *vm, char *mes)
 {
-
-	
-	free_vm(vm);
+	ft_putendl2(VM_NAME": ", mes);
+	//free_vm(vm);
 	exit(1);
 }

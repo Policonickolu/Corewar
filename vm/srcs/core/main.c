@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 08:13:53 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/20 09:24:26 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/23 16:45:36 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		main(int ac, char **av)
 
 	vm->ac = ac;
 	vm->av = av;
-	if (parse_options(&vm, ac, av))
+	if (parse_args(&vm, &ac, &av))
 		return (1);
 	parse(&vm);
 	run_vm(&vm);

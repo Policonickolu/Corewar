@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   options.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 11:29:30 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/24 12:16:28 by hben-yah         ###   ########.fr       */
+/*   Created: 2019/11/24 08:36:14 by hben-yah          #+#    #+#             */
+/*   Updated: 2019/11/24 09:00:00 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "vm.h"
 #include "libft.h"
 
-void	vm_exit(t_vm *vm, char *mes)
+int	parse_options(int *options, char *arg)
 {
-	ft_putendl2(VM_NAME": ", mes);
-	del_vm(vm);
-	exit(1);
+	int index;
+
+	if (*arg == '-')
+		++arg;
+	while (*arg)
+	{
+		if ((index = ft_indexof(*arg, VM_OPTIONS)) == -1)
+			return (invalid_option_error(*arg));
+		*options |= 1 << index;
+		if (*options & VM_OP_H)
+			return (put_usage());
+		++arg;
+	}
+	return (0);
 }

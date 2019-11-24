@@ -6,12 +6,16 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 08:50:53 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/20 09:40:36 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/24 09:34:33 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	put_usage()
+#include "vm.h"
+#include "libft.h"
+
+int		put_usage(void)
 {
-	ft_putstr_fd("\nUsage:  ./"VM_NAME" [-"VM_OPTIONS"] ", 2);
+	ft_putstr_fd("Usage:  ./"VM_NAME" [-"VM_OPTIONS"] ", 2);
 	ft_putstr_fd("[-dump nbr_cycles] [[-n number] champion1.cor] ...\n", 2);
+	return (1);
 }

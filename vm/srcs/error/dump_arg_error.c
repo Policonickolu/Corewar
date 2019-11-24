@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   dump_arg_error.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 11:29:30 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/24 12:16:28 by hben-yah         ###   ########.fr       */
+/*   Created: 2019/11/20 08:33:22 by hben-yah          #+#    #+#             */
+/*   Updated: 2019/11/24 09:33:45 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "vm.h"
 #include "libft.h"
 
-void	vm_exit(t_vm *vm, char *mes)
+int		dump_arg_error(void)
 {
-	ft_putendl2(VM_NAME": ", mes);
-	del_vm(vm);
-	exit(1);
+	ft_putendl_fd(VM_NAME": dump number of cycles has to be a positive number",
+		2);
+	return (put_usage());
 }

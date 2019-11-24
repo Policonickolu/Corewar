@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   number_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 11:29:30 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/24 12:16:28 by hben-yah         ###   ########.fr       */
+/*   Created: 2019/11/24 12:40:00 by hben-yah          #+#    #+#             */
+/*   Updated: 2019/11/24 12:40:13 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "vm.h"
 #include "libft.h"
 
-void	vm_exit(t_vm *vm, char *mes)
+int		already_attributed_number_error(void)
 {
-	ft_putendl2(VM_NAME": ", mes);
-	del_vm(vm);
-	exit(1);
+	ft_putendl_fd(VM_NAME": already attributed champion number",
+		2);
+	return (put_usage());
+}
+
+int		n_arg_error(void)
+{
+	ft_putendl_fd(VM_NAME": champion number has to be a positive number",
+		2);
+	return (put_usage());
 }

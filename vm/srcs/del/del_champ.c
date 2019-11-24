@@ -1,22 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   del_champ.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 11:29:30 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/24 12:16:28 by hben-yah         ###   ########.fr       */
+/*   Created: 2019/11/24 09:05:49 by hben-yah          #+#    #+#             */
+/*   Updated: 2019/11/24 09:33:25 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "vm.h"
-#include "libft.h"
 
-void	vm_exit(t_vm *vm, char *mes)
+void	del_champ(t_champ **champ)
 {
-	ft_putendl2(VM_NAME": ", mes);
-	del_vm(vm);
-	exit(1);
+	t_champ *todel;
+
+	if (champ && *champ)
+	{
+		todel = *champ;
+		*champ = (*champ)->next;
+		free(todel->file);
+		free(todel);
+	}
+}
+
+void	del_champ_lst(t_champ **lst)
+{
+	if (lst)
+		while (*lst)
+			del_champ(lst);
 }

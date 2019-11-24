@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   get_address.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 11:29:30 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/24 12:16:28 by hben-yah         ###   ########.fr       */
+/*   Created: 2019/11/24 17:09:41 by hben-yah          #+#    #+#             */
+/*   Updated: 2019/11/24 17:09:56 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "vm.h"
-#include "libft.h"
 
-void	vm_exit(t_vm *vm, char *mes)
+void		get_address(t_process *ps, int modify, int *address)
 {
-	ft_putendl2(VM_NAME": ", mes);
-	del_vm(vm);
-	exit(1);
+	*address = ps->pc + modify;
+	if (*address > 0)
+		*address %= MEM_SIZE;
+	else if (*address < 0)
+		*address = (*address % MEM_SIZE) + MEM_SIZE;
 }

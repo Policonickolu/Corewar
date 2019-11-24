@@ -31,10 +31,10 @@ FILES_C			=   \\" >> Makefile
 echo "FILES_O			=	\$(FILES_C:.c=.o)
 FILES_H			=	\\" >> Makefile
 (cd includes; find . -name '*.h' | sed -e '$ ! s/$/ \\/' | sed -e 's/^\.\//					/' >> ../Makefile)
-#echo "
-# Directories
-#SRCS_SD			= 	\\" >> Makefile
-#(cd srcs; find . ! -path . -type d | sed -e '$ ! s/$/ \\/' | sed -e 's/^\.\//					/' >> ../Makefile)
+echo "
+#Directories
+SRCS_SD			= 	\\" >> Makefile
+(cd srcs; find . ! -path . -type d | sed -e '$ ! s/$/ \\/' | sed -e 's/^\.\//					/' >> ../Makefile)
 
 echo "SRCS_D			=	./srcs/
 OBJS_D			=   ./objs/
@@ -55,6 +55,9 @@ find ../libft/includes -name '*.h' -exec basename {} \; | sed -e '$ ! s/$/ \\/' 
 
 echo "
 
+# Op
+OP_D			=	../op
+
 # Rules
 
 all				:	\$(NAME)
@@ -74,8 +77,8 @@ dev				:	debug \$(NAME)
 \$(OBJS_D)%.o	:	\$(SRCS_D)%.c \$(addprefix \$(LFT_I), \$(LFT_H)) \$(INCL)
 					@echo -e \"\\\033[2K\\\c\"
 					@echo \"\\\rCréation de l'objet \$@\\\c\"
-					@mkdir -p \$(OBJS_D)
-					@\$(COMP) \$(FLAG) -I \$(LFT_I) -I \$(INCL_D) -o \$@ -c \$<
+					@mkdir -p \$(addprefix \$(OBJS_D), \$(SRCS_SD))
+					@\$(COMP) \$(FLAG) -I \$(LFT_I) -I \$(INCL_D) -I \$(OP_D) -o \$@ -c \$<
 
 clean			:
 					@make -C \$(LFT_D) clean

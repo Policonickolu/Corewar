@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/11/20 08:10:10 by hben-yah          #+#    #+#              #
-#    Updated: 2019/11/20 08:10:10 by hben-yah         ###   ########.fr        #
+#    Created: 2019/11/24 17:16:30 by hben-yah          #+#    #+#              #
+#    Updated: 2019/11/24 17:16:30 by hben-yah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,60 @@ FLAGDEV         =   -g3
 
 # Sources paths
 FILES_C			=   \
+					arguments/champion.c \
+					arguments/handler.c \
+					arguments/options.c \
+					arguments/parser.c \
+					core/exec_processes.c \
+					core/exit.c \
+					core/init_processes.c \
+					core/main.c \
+					core/run.c \
+					del/del_champ.c \
+					del/del_vm.c \
+					error/champions_error.c \
+					error/dump_arg_error.c \
+					error/file_not_found_error.c \
+					error/invalid_file_error.c \
+					error/invalid_option_error.c \
+					error/number_error.c \
+					helpers/get_address.c \
+					helpers/get_r.c \
+					helpers/modify_pc.c \
+					operations/add.c \
+					operations/aff.c \
+					operations/and.c \
+					operations/fork.c \
+					operations/ld.c \
+					operations/ldi.c \
+					operations/lfork.c \
+					operations/live.c \
+					operations/lld.c \
+					operations/lldi.c \
+					operations/or.c \
+					operations/st.c \
+					operations/sti.c \
+					operations/sub.c \
+					operations/xor.c \
+					operations/zjmp.c \
+					printer/print_champion.c \
+					printer/usage.c \
+					reader/reader.c
 FILES_O			=	$(FILES_C:.c=.o)
 FILES_H			=	\
 					prototypes.h \
 					vm.h
+
+#Directories
+SRCS_SD			= 	\
+					arguments \
+					core \
+					del \
+					error \
+					helpers \
+					operations \
+					printer \
+					reader
 SRCS_D			=	./srcs/
 OBJS_D			=   ./objs/
 INCL_D 			=	./includes/
@@ -44,6 +94,9 @@ LFT_H			=	\
 					libft.h
 
 
+# Op
+OP_D			=	../op
+
 # Rules
 
 all				:	$(NAME)
@@ -63,8 +116,8 @@ $(LFT_P)		:	force
 $(OBJS_D)%.o	:	$(SRCS_D)%.c $(addprefix $(LFT_I), $(LFT_H)) $(INCL)
 					@echo -e "\033[2K\c"
 					@echo "\rCréation de l'objet $@\c"
-					@mkdir -p $(OBJS_D)
-					@$(COMP) $(FLAG) -I $(LFT_I) -I $(INCL_D) -o $@ -c $<
+					@mkdir -p $(addprefix $(OBJS_D), $(SRCS_SD))
+					@$(COMP) $(FLAG) -I $(LFT_I) -I $(INCL_D) -I $(OP_D) -o $@ -c $<
 
 clean			:
 					@make -C $(LFT_D) clean

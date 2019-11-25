@@ -6,10 +6,11 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 12:41:31 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/24 12:59:08 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/25 16:39:04 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "vm.h"
 #include "libft.h"
 

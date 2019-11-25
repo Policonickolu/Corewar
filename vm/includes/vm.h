@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 08:09:19 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/24 17:14:13 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/25 17:20:24 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <stdlib.h>
 # include "op.h"
+# include "libft.h"
 
 /*
 ** Defines
@@ -27,6 +28,8 @@
 
 # define STR_EXPAND(tok) #tok
 # define STR(tok) STR_EXPAND(tok)
+
+# define CW_HASHTAB_SIZE		64
 
 /*
 ** Structures
@@ -49,7 +52,7 @@ typedef struct			s_process
 	char				*name;
 	int					number;
 
-	unsigned char		r[REG_NUMBER][REG_SIZE];
+	unsigned char		regs[REG_NUMBER * REG_SIZE];
 	int					pc;
 	int					pc_tmp;
 	char				carry;
@@ -73,10 +76,10 @@ typedef struct			s_vm
 	int					dump;
 	//int				debug;
 
-	int					aff;
-	int					affd;
-	int					affx;
-	int					affx2;
+	// int					aff;
+	// int					affd;
+	// int					affx;
+	// int					affx2;
 
 	int					cycle;
 	int					total_cycle;
@@ -94,9 +97,12 @@ typedef struct			s_vm
 
 	int					n_champ;
 	t_champ				*champ;
+
 	int					n_process;
 	t_process			*process;
 	
+	t_hashtab			*operations;
+
 	//t_ps_op				*ops_queue;
 }						t_vm;
 
@@ -112,7 +118,7 @@ typedef struct			s_op
 	int					has_idx;
 }						t_op;
 
-extern t_op				g_op_tab[17];
+extern t_op				op_tab[17];
 
 typedef void			(*t_operation_code)(t_vm *vm, t_process *ps);
 

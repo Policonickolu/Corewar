@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 12:10:07 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/24 15:03:42 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/25 16:48:45 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,15 @@
 #include "vm.h"
 #include "libft.h"
 
-int	check_magic(unsigned int magic)
+int	check_numbers(header_t *header)
 {
-	int				m;
 	unsigned char 	*m1;
-	unsigned char 	*m2;
 
-	m = COREWAR_EXEC_MAGIC;
-	m1 = (unsigned char*)&magic;
-	m2 =  (unsigned char*)&m;
-
-	return (!(m1[0] == m2[3]
-			&& m1[1] == m2[2]
-			&& m1[2] == m2[1]
-			&& m1[3] == m2[0]));
+	m1 = (unsigned char*)&header->prog_size;
+	header->prog_size = (m1[0] << 24) + (m1[1] << 16) + (m1[2] << 8) + m1[3];
+	m1 = (unsigned char*)&header->magic;
+	header->magic = (m1[0] << 24) + (m1[1] << 16) + (m1[2] << 8) + m1[3];
+	return (header->magic != COREWAR_EXEC_MAGIC);
 }
 
 int read_champion(t_champ *champ)
@@ -37,18 +32,18 @@ int read_champion(t_champ *champ)
 
 	if ((fd = open(champ->file, O_RDONLY)) < 0)
 		return (file_not_found_error());
-	if (read(fd, &champ->header, sizeof(header_t))
-		< (int)sizeof(header_t) || check_magic(champ->header.magic))
+	if (read(fd, (void *)&champ->header, sizeof(header_t))
+		< (int)sizeof(header_t) || check_numbers(&champ->header))
 	{
 		close(fd);
 		return (invalid_file_error());
 	}
-	if (champ->header.prog_size < CHAMP_MAX_SIZE)
+	if (champ->header.prog_size > CHAMP_MAX_SIZE)
 	{
 		close(fd);
 		return (champion_size_too_big());
 	}
-	if (read(fd, &champ->prog, champ->header.prog_size)
+	if (read(fd, (void *)&champ->prog[0], champ->header.prog_size)
 		< (int)champ->header.prog_size)
 	{
 		close(fd);

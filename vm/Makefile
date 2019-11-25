@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/11/24 17:16:30 by hben-yah          #+#    #+#              #
-#    Updated: 2019/11/24 17:16:30 by hben-yah         ###   ########.fr        #
+#    Created: 2019/11/25 17:45:34 by hben-yah          #+#    #+#              #
+#    Updated: 2019/11/25 17:45:34 by hben-yah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,9 @@ FILES_C			=   \
 					error/invalid_option_error.c \
 					error/number_error.c \
 					helpers/get_address.c \
-					helpers/get_r.c \
-					helpers/modify_pc.c \
+					helpers/get_reg.c \
+					helpers/move_pc.c \
+					helpers/set_reg.c \
 					operations/add.c \
 					operations/aff.c \
 					operations/and.c \
@@ -48,6 +49,7 @@ FILES_C			=   \
 					operations/live.c \
 					operations/lld.c \
 					operations/lldi.c \
+					operations/op.c \
 					operations/or.c \
 					operations/st.c \
 					operations/sti.c \

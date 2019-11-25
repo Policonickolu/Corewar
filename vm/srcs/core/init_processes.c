@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:57:40 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/24 17:18:03 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/25 16:05:26 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	init_process(t_vm *vm, t_champ *champ, size_t pc)
 		vm_exit(vm, "error malloc, init process");
 	process->name = champ->header.prog_name;
 	process->number = champ->number;
-	process->r[get_r(1)] = process->number; // FAIRE UNE FONCTION QUI ECRIT DANS UN REGISTRE DE PLUSIEURS CASES !!!
+	//process->r[get_r(1)] = process->number; // FAIRE UNE FONCTION QUI ECRIT DANS UN REGISTRE DE PLUSIEURS CASES !!!
+	set_reg(process, 1, &process->number, sizeof(process->number));
 	process->pc = pc;
 	process->next = vm->process;
 	process->id = ++vm->n_process;

@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 15:52:17 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/06/19 15:17:45 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/25 17:00:32 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,23 @@ typedef struct	s_arlist
 	size_t		length;
 	t_list		*list;
 }				t_arlist;
+
+/*
+**	Hash
+*/
+
+typedef struct	s_hashitem
+{
+	char					*key;
+	void					*data;
+	size_t					size;
+	struct s_hashitem		*next;
+}				t_hashitem;
+
+typedef struct	s_hashtab
+{
+	t_hashitem				**array;
+	size_t					size;
+}				t_hashtab;
 
 #endif

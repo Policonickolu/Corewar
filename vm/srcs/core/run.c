@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:04:15 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/24 17:06:16 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/25 17:45:15 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,74 +26,75 @@
 // 	}
 // }
 
-static void			setup_ops(t_op_code *table)
-{
-	table[454501] = &op_live;
-	table[1764] = &op_ld;
-	table[1908] = &op_st;
-	table[26468] = &op_add;
-	table[30578] = &op_sub;
-	table[26596] = &op_and;
-	table[1778] = &op_or;
-	table[32498] = &op_xor;
-	table[519920] = &op_zjmp;
-	table[28265] = &op_ldi;
-	table[30569] = &op_sti;
-	table[421739] = &op_fork;
-	table[28388] = &op_lld;
-	table[454249] = &op_lldi;
-	table[7237483] = &op_lfork;
-	table[26470] = &op_aff;
-}
+// static void			setup_ops(t_operation_code *table)
+// {
+// 	table[454501] = &operate_live;
+// 	table[1764] = &operate_ld;
+// 	table[1908] = &operate_st;
+// 	table[26468] = &operate_add;
+// 	table[30578] = &operate_sub;
+// 	table[26596] = &operate_and;
+// 	table[1778] = &operate_or;
+// 	table[32498] = &operate_xor;
+// 	table[519920] = &operate_zjmp;
+// 	table[28265] = &operate_ldi;
+// 	table[30569] = &operate_sti;
+// 	table[421739] = &operate_fork;
+// 	table[28388] = &operate_lld;
+// 	table[454249] = &operate_lldi;
+// 	table[7237483] = &operate_lfork;
+// 	table[26470] = &operate_aff;
+// }
 
-static t_op_code	get_op(long op_code)
-{
-	static t_op_code	table[7237484];
+// static t_operation_code	get_op(long op_code)
+// {
+// 	static t_operation_code	table[7237484];
 
-	if (op_code < 1 || op_code > 7237483)
-		return (NULL);
-	if (!table[1764])
-		setup_ops(table);
-	return (table[op_code]);
-}
+// 	if (op_code < 1 || op_code > 7237483)
+// 		return (NULL);
+// 	if (!table[1764])
+// 		setup_ops(table);
+// 	return (table[op_code]);
+// }
 
-static long			hash_name(char *name)
-{
-	long			hash;
+// static long			hash_name(char *name)
+// {
+// 	long			hash;
 
-	if (!name)
-		return (0);
-	hash = 0;
-	while (*name)
-	{
-		hash = hash << 4;
-		hash |= *name;
-		name++;
-	}
-	return (hash);
-}
+// 	if (!name)
+// 		return (0);
+// 	hash = 0;
+// 	while (*name)
+// 	{
+// 		hash = hash << 4;
+// 		hash |= *name;
+// 		name++;
+// 	}
+// 	return (hash);
+// }
 
-void				save_op(t_process *ps, int op_code)
+void				save_op(t_vm *vm, t_process *ps, int op_code)
 {
 	t_op			*seek;
 
-	seek = g_op_tab;
+	seek = op_tab;
 	while (seek->op_code && seek->op_code != op_code)
 		seek++;
-	if (!(ps->op = get_op(hash_name(seek->name))))
+	ft_putendl2("opé : ", seek->name);
+	if (!(ps->op = ht_get(vm->operations, seek->name)))
 	{
-		modify_pc(ps, 1);
+		move_pc(ps, 1);
 		ps->sleep_cycles = 1;
 	}
 	else
 		ps->sleep_cycles = seek->nb_cycles - 2;
 }
 
-void		exec_process(t_vm *vm, t_process *ps)
-{
-	ps->pc_tmp = ps->pc;
-	save_op(ps, (int)vm->field[ps->pc]);
-}
+// void		exec_process(t_vm *vm, t_process *ps)
+// {
+// 	ps->pc_tmp = ps->pc;
+// 	save_op(vm, ps, (int)vm->field[ps->pc]);
+// }
 
 // void			add_op_to_queue(t_vm *vm, t_process *ps)
 // {
@@ -116,8 +117,8 @@ void			exec_operation(t_vm *vm, t_process *process)
 
 void			get_next_operation(t_vm *vm, t_process *process)
 {
-	ps->pc_tmp = ps->pc;
-	save_op(ps, (int)vm->field[ps->pc]);
+	process->pc_tmp = process->pc;
+	save_op(vm, process, (int)vm->field[process->pc]);
 }
 
 void			exec_processes(t_vm *vm)
@@ -141,7 +142,7 @@ void			exec_processes(t_vm *vm)
 	//exec_ops_queue(vm);
 }
 
-int		run_vm(t_vm *vm)
+void	run_vm(t_vm *vm)
 {
 	init_processes(vm);
 	while (vm->cycle_to_die > 0 && vm->process)
@@ -151,7 +152,7 @@ int		run_vm(t_vm *vm)
 		// 	vm->cycle = 0;
 		if (vm->cycle == vm->cycle_to_die)
 		{
-			check_processes(vm);
+			//check_processes(vm);
 			++vm->check;
 			if (vm->check == MAX_CHECKS || vm->live_calls >= NBR_LIVE)
 			{

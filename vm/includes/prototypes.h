@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/24 17:16:30 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/24 17:16:30 by hben-yah         ###   ########.fr       */
+/*   Created: 2019/11/25 17:45:34 by hben-yah          #+#    #+#             */
+/*   Updated: 2019/11/25 17:45:34 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ int				parse_arguments(t_vm *vm, int ac, char **av);
 void			vm_exit(t_vm *vm, char *mes);
 void			init_process(t_vm *vm, t_champ *champ, size_t pc);
 void			init_processes(t_vm *vm);
+int				set_operations(t_vm *vm);
 int				main(int ac, char **av);
-void			save_op(t_process *ps, int op_code);
-void			exec_process(t_vm *vm, t_process *ps);
+void			save_op(t_vm *vm, t_process *ps, int op_code);
 void			exec_operation(t_vm *vm, t_process *process);
 void			get_next_operation(t_vm *vm, t_process *process);
 void			exec_processes(t_vm *vm);
-int				run_vm(t_vm *vm);
+void			run_vm(t_vm *vm);
 void			del_champ(t_champ **champ);
 void			del_champ_lst(t_champ **lst);
 void			del_vm(t_vm *vm);
@@ -48,9 +48,10 @@ int				invalid_file_error(void);
 int				invalid_option_error(char arg);
 int				already_attributed_number_error(void);
 int				n_arg_error(void);
-void			get_address(t_process *ps, int modify, int *address);
-int				get_r(int reg);
-void			modify_pc(t_process *ps, int modify);
+int				get_new_address(t_process *ps, int modify);
+void			get_reg(t_process *ps, int reg, void *val, size_t size);
+void			move_pc(t_process *ps, int val);
+void			set_reg(t_process *ps, int reg, void *val, size_t size);
 void			operate_add(t_vm *vm, t_process *ps);
 void			operate_aff(t_vm *vm, t_process *ps);
 void			operate_and(t_vm *vm, t_process *ps);
@@ -69,7 +70,7 @@ void			operate_xor(t_vm *vm, t_process *ps);
 void			operate_zjmp(t_vm *vm, t_process *ps);
 void			print_champion(t_vm *vm);
 int				put_usage(void);
-int				check_magic(unsigned int magic);
+int				check_numbers(header_t *header);
 int	 read_champion(t_champ *champ);
 int	 read_champions(t_vm *vm);
 

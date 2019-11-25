@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/24 17:16:30 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/24 17:16:30 by hben-yah         ###   ########.fr       */
+/*   Created: 2019/11/25 17:45:34 by hben-yah          #+#    #+#             */
+/*   Updated: 2019/11/25 17:45:34 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,15 @@ void		*al_get(t_arlist *al, int i);
 int			al_add(t_arlist *al, void *content, size_t content_size);
 void		*al_remove(t_arlist *al, int i);
 void		al_del(t_arlist **al);
+size_t		ht_hash(char *key, size_t size);
+t_hashtab		*ht_new(size_t size);
+void		ht_del(t_hashtab *ht, char *key, void (*del)(void *, size_t));
+int			ht_add(t_hashtab *ht, char *key, void *data, size_t size);
+void		*ht_get(t_hashtab *ht, char *key);
+int			ht_itemadd(t_hashitem **tail, char *key, void *data, size_t size);
+void		ht_itemdel(t_hashitem **head, void (*del)(void *, size_t));
+void		ht_tabclear(t_hashtab *ht, void (*del)(void *, size_t));
+void		ht_tabdel(t_hashtab **ht, void (*del)(void *, size_t));
 int			ft_atoi(const char *str);
 int			ft_atoi_base(char *str, char *base);
 long		ft_atol(const char *str);

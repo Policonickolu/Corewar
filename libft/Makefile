@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/11/24 17:16:30 by hben-yah          #+#    #+#              #
-#    Updated: 2019/11/24 17:16:30 by hben-yah         ###   ########.fr        #
+#    Created: 2019/11/25 17:45:34 by hben-yah          #+#    #+#              #
+#    Updated: 2019/11/25 17:45:34 by hben-yah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,8 @@ FILES_C			=   \
 					boolean/ft_isspace_wnt.c \
 					boolean/ft_isupper.c \
 					collection/arraylist.c \
+					collection/hashtable/hashtable.c \
+					collection/hashtable/items.c \
 					convert/ft_atoi.c \
 					convert/ft_atoi_base.c \
 					convert/ft_atol.c \
@@ -184,6 +186,7 @@ FILES_H			=	\
 SRCS_SD			= 	\
 					boolean \
 					collection \
+					collection/hashtable \
 					convert \
 					input \
 					list \

@@ -6,11 +6,11 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 15:08:03 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/20 07:38:38 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/27 10:38:05 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_min(int a, int b)
+int		ft_min(double a, double b)
 {
 	return (a < b ? a : b);
 }

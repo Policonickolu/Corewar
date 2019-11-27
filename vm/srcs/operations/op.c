@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:43:01 by zaz               #+#    #+#             */
-/*   Updated: 2019/11/25 15:29:20 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/27 08:35:57 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,13 @@ t_op    op_tab[17] =
 	{"lfork", 1, {T_DIR}, 15, 1000, "long fork", 0, 1},
 	{"aff", 1, {T_REG}, 16, 2, "aff", 1, 0},
 	{0, 0, {0}, 0, 0, 0, 0, 0}
+};
+
+
+void	(*g_op_func_tab[17])(t_vm *, t_process *) =
+{
+	&operate_live, &operate_ld, &operate_st, &operate_add, &operate_sub,
+	&operate_and, &operate_or, &operate_xor, &operate_zjmp, &operate_ldi,
+	&operate_sti, &operate_fork, &operate_lld, &operate_lldi, &operate_lfork,
+	&operate_aff, 0 
 };

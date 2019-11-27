@@ -6,14 +6,14 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/08 14:50:50 by hben-yah          #+#    #+#             */
-/*   Updated: 2018/08/08 15:26:59 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/27 10:19:07 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 static void
-	print_non_printable(t_strbuffer *sb, char *str, size_t n)
+	print_non_printable(char *str, size_t n, t_printf *pf)
 {
 	const char *base = "0123456789abcdef";
 
@@ -21,20 +21,21 @@ static void
 	{
 		if (*str < ' ' || *str == 127)
 		{
-			add(sb, "\\", 1);
-			add(sb, &base[*str / 16], 1);
-			add(sb, &base[*str % 16], 1);
+			pf->len += put("\\", 1);
+			pf->len += put((char *)&base[*str / 16], 1);
+			pf->len += put((char *)&base[*str % 16], 1);
 		}
 		else
-			add(sb, str, 1);
+			pf->len += put(str, 1);
 		++str;
 	}
 }
 
-int	convert_r(t_formatter *fmt, t_strbuffer *sb, va_list ap)
+int	convert_r(t_printf *pf, t_formatter *fmt, va_list ap)
 {
 	char	*str;
 	int		ret;
+	int		before;
 
 	if (!(str = va_arg(ap, char *)))
 		str = "(null)";
@@ -43,6 +44,10 @@ int	convert_r(t_formatter *fmt, t_strbuffer *sb, va_list ap)
 	else
 		ret = ft_min(ft_strlen(str), fmt->precision);
 	fmt->precision = -1;
-	print_non_printable(sb, str, ret);
+	if ((before = !is_flag('-', *fmt)))
+		fill_width_chr(pf, fmt, ret);
+	print_non_printable(str, ret, pf);
+	if (!before)
+		fill_width_chr(pf, fmt, ret);
 	return (ret);
 }

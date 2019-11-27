@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   integer_unsigned.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwolff <hwolff@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/06 15:16:18 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/01/16 20:03:51 by hwolff           ###   ########.fr       */
+/*   Updated: 2019/11/27 10:19:03 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 static int
-	uitoa_base(t_strbuffer *sb, intmax_t i, int b, char upcase)
+	uitoa_base(t_conv *c, intmax_t i, int b, char upcase)
 {
 	const char		*a = (upcase ? "0123456789ABCDEF" : "0123456789abcdef");
 	const uintmax_t	ui = (uintmax_t)i;
@@ -21,8 +21,8 @@ static int
 
 	ret = 1;
 	if ((uintmax_t)b <= ui)
-		ret += uitoa_base(sb, (intmax_t)(ui / b), b, upcase);
-	add(sb, a + (size_t)(ui % b), 1);
+		ret += uitoa_base(c, (intmax_t)(ui / b), b, upcase);
+	bwrite(&c->conv, a + (size_t)(ui % b), 1);
 	return (ret);
 }
 
@@ -50,7 +50,7 @@ static uintmax_t
 	return (arg);
 }
 
-int	unsigned_integer(t_formatter *fmt, t_strbuffer *sb, va_list ap, int b)
+int	unsigned_integer(t_formatter *fmt, t_conv *c, va_list ap, int b)
 {
 	uintmax_t	arg;
 	int			ret;
@@ -58,12 +58,12 @@ int	unsigned_integer(t_formatter *fmt, t_strbuffer *sb, va_list ap, int b)
 	arg = get_arg(ap, fmt);
 	if (arg == 0 && is_flag('#', *fmt)
 		&& (fmt->converter == 'x' || fmt->converter == 'X'))
-		sb->length -= 2;
-	if ((arg == 0 && fmt->precision == 0)
-		|| (arg == 0 && fmt->converter == 'o' && is_flag('#', *fmt)))
+		c->prefix.len -= 2;
+	if ((arg == 0 && fmt->precision == 0) ||
+	(arg == 0 && fmt->converter == 'o' && is_flag('#', *fmt)))
 		return (0);
-	ret = uitoa_base(sb, arg, ft_abs(b), ft_isupper(fmt->converter));
+	ret = uitoa_base(c, arg, ft_abs(b), ft_isupper(fmt->converter));
 	if (b == 10 && is_flag('\'', *fmt))
-		ret += set_coma(sb, ret);
+		ret += set_coma(c, ret);
 	return (ret);
 }

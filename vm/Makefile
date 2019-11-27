@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/11/25 17:45:34 by hben-yah          #+#    #+#              #
-#    Updated: 2019/11/25 17:45:34 by hben-yah         ###   ########.fr        #
+#    Created: 2019/11/27 10:57:27 by hben-yah          #+#    #+#              #
+#    Updated: 2019/11/27 10:57:27 by hben-yah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,10 +35,15 @@ FILES_C			=   \
 					error/invalid_file_error.c \
 					error/invalid_option_error.c \
 					error/number_error.c \
-					helpers/get_address.c \
+					helpers/get_champ.c \
+					helpers/get_new_address.c \
 					helpers/get_reg.c \
+					helpers/move_oc.c \
 					helpers/move_pc.c \
+					helpers/move_pc_past_oc.c \
+					helpers/read_field.c \
 					helpers/set_reg.c \
+					helpers/toggle_carry.c \
 					operations/add.c \
 					operations/aff.c \
 					operations/and.c \
@@ -56,6 +61,7 @@ FILES_C			=   \
 					operations/sub.c \
 					operations/xor.c \
 					operations/zjmp.c \
+					printer/display_field.c \
 					printer/print_champion.c \
 					printer/usage.c \
 					reader/reader.c

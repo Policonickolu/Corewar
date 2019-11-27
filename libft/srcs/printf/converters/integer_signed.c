@@ -6,22 +6,22 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/06 15:16:35 by hben-yah          #+#    #+#             */
-/*   Updated: 2018/08/10 15:07:12 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/27 10:19:01 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int
-	itoa_base(t_strbuffer *sb, intmax_t i, int base, char upcase)
+int
+	itoa_base(t_conv *c, intmax_t i, int base, char upcase)
 {
 	const char	*a = (upcase ? "0123456789ABCDEF" : "0123456789abcdef");
 	int			ret;
 
 	ret = 1;
 	if (i <= -base || base <= i)
-		ret += itoa_base(sb, i / base, base, upcase);
-	add(sb, a + ft_abs(i % base), 1);
+		ret += itoa_base(c, i / base, base, upcase);
+	bwrite(&c->conv, a + ft_abs(i % base), 1);
 	return (ret);
 }
 
@@ -49,22 +49,21 @@ static intmax_t
 	return (arg);
 }
 
-int	signed_integer(t_formatter *fmt, t_strbuffer *sb, va_list ap, int b)
+int	signed_integer(t_formatter *fmt, t_conv *c, va_list ap, int b)
 {
 	intmax_t	arg;
-	int			ret;
 
 	arg = get_arg(ap, fmt);
 	if (arg < 0)
-		add(sb, "-", 1);
+		c->sign = '-';
 	else if (is_flag('+', *fmt))
-		add(sb, "+", 1);
+		c->sign = '+';
 	else if (is_flag(' ', *fmt))
-		add(sb, " ", 1);
+		c->sign = ' ';
 	if (arg == 0 && fmt->precision == 0)
 		return (0);
-	ret = itoa_base(sb, arg, ft_abs(b), ft_isupper(fmt->converter));
+	itoa_base(c, arg, ft_abs(b), ft_isupper(fmt->converter));
 	if (b == 10 && is_flag('\'', *fmt))
-		ret += set_coma(sb, ret);
-	return (ret);
+		set_coma(c, c->conv.len);
+	return (1);
 }

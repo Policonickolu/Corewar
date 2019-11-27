@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 18:52:58 by hben-yah          #+#    #+#             */
-/*   Updated: 2018/08/09 20:04:11 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/27 10:18:53 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,64 +55,54 @@ static t_date
 }
 
 static void
-	long_to_date(t_strbuffer *sb, t_date *date)
+	long_to_date(t_conv *c, t_date *date)
 {
 	static const char	*months[12] = {
 		"Janvier", "Février", "Mars", "Avril",
 		"Mai", "Juin", "Juillet", "Août",
 		"Septembre", "Octobre", "Novembre", "Décembre"};
-	char				*tmp;
 
-	trial((tmp = ft_itoa(date->day)) != NULL);
-	add(sb, tmp, ft_strlen(tmp));
-	free(tmp);
-	add(sb, " ", 1);
-	add(sb, months[date->month], ft_strlen(months[date->month]));
-	add(sb, " ", 1);
-	trial((tmp = ft_itoa(date->year)) != NULL);
-	add(sb, tmp, ft_strlen(tmp));
-	free(tmp);
+	itoa_base(c, date->day, 10, 0);
+	bwrite(&c->conv, " ", 1);
+	bwrite(&c->conv, months[date->month], ft_strlen(months[date->month]));
+	bwrite(&c->conv, " ", 1);
+	itoa_base(c, date->year, 10, 0);
 }
 
 static void
-	long_to_time(t_strbuffer *sb, t_date *date)
+	long_to_time(t_conv *c, t_date *date)
 {
-	char *tmp;
-
 	if (date->hour < 10)
-		add(sb, "0", 1);
-	trial((tmp = ft_itoa(date->hour)) != NULL);
-	add(sb, tmp, ft_strlen(tmp));
-	free(tmp);
-	add(sb, ":", 1);
+		bwrite(&c->conv, "0", 1);
+	itoa_base(c, date->hour, 10, 0);
+	bwrite(&c->conv, ":", 1);
 	if (date->min < 10)
-		add(sb, "0", 1);
-	trial((tmp = ft_itoa(date->min)) != NULL);
-	add(sb, tmp, ft_strlen(tmp));
-	free(tmp);
-	add(sb, ":", 1);
+		bwrite(&c->conv, "0", 1);
+	itoa_base(c, date->min, 10, 0);
+	bwrite(&c->conv, ":", 1);
 	if (date->sec < 10)
-		add(sb, "0", 1);
-	trial((tmp = ft_itoa(date->sec)) != NULL);
-	add(sb, tmp, ft_strlen(tmp));
-	free(tmp);
+		bwrite(&c->conv, "0", 1);
+	itoa_base(c, date->sec, 10, 0);
 }
 
-int	convert_k(t_formatter *fmt, t_strbuffer *sb, va_list ap)
+int	convert_k(t_printf *pf, t_formatter *fmt, va_list ap)
 {
 	long long	arg;
 	t_date		date;
+	t_conv		c;
 
+	ft_bzero(&c, sizeof(t_buffer));
 	arg = va_arg(ap, long long);
 	if (fmt->precision == 1)
-		long_to_time(sb, sec_to_date(arg, &date));
+		long_to_time(&c, sec_to_date(arg, &date));
 	else if (fmt->precision >= 2)
 	{
-		long_to_date(sb, sec_to_date(arg, &date));
-		add(sb, "  ", 2);
-		long_to_time(sb, sec_to_date(arg, &date));
+		long_to_date(&c, sec_to_date(arg, &date));
+		bwrite(&c.conv, "  ", 2);
+		long_to_time(&c, sec_to_date(arg, &date));
 	}
 	else
-		long_to_date(sb, sec_to_date(arg, &date));
+		long_to_date(&c, sec_to_date(arg, &date));
+	pf->len += put(c.conv.buff, c.conv.len);
 	return (1);
 }

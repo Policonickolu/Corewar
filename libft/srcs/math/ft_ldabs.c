@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vprintf.c                                       :+:      :+:    :+:   */
+/*   ft_ldabs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/31 01:01:32 by hben-yah          #+#    #+#             */
-/*   Updated: 2018/07/31 01:03:32 by hben-yah         ###   ########.fr       */
+/*   Created: 2019/11/27 10:47:02 by hben-yah          #+#    #+#             */
+/*   Updated: 2019/11/27 10:47:15 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 
-int		ft_vprintf(const char *format, va_list ap)
+long double		ft_ldabs(long double d)
 {
-	return (ft_vdprintf(1, format, ap));
+	return (d < 0 ? -d : d);
 }

@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exception.c                                        :+:      :+:    :+:   */
+/*   get_champ.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/13 13:09:02 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/01/28 11:51:41 by hben-yah         ###   ########.fr       */
+/*   Created: 2019/11/27 09:08:56 by hben-yah          #+#    #+#             */
+/*   Updated: 2019/11/27 09:10:35 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "vm.h"
 
-void	trial(int ret)
+t_champ	*get_champ(t_vm *vm, int number)
 {
-	if (!ret)
+	t_champ		*champ;
+
+	champ = vm->champ;
+	while (champ)
 	{
-		ft_putendl(ERROR_MESSAGE);
-		exit(EXIT_FAILURE);
+		if (champ->number == number)
+			return (champ);
+		champ = champ->next;
 	}
+	return (NULL);
 }

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/25 17:45:34 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/25 17:45:34 by hben-yah         ###   ########.fr       */
+/*   Created: 2019/11/27 10:57:27 by hben-yah          #+#    #+#             */
+/*   Updated: 2019/11/27 10:57:27 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ t_list		*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 t_list		*ft_lstnew(void const *content, size_t content_size);
 void		ft_lstrev(t_list **alst);
 int			ft_abs(int i);
+long double		ft_ldabs(long double d);
 int			ft_max(int a, int b);
-int			ft_min(int a, int b);
+int			ft_min(double a, double b);
 int			ft_pow(int nb, int pow);
 int			ft_sqrt(int nb);
 void		ft_bzero(void *s, size_t n);
@@ -118,47 +119,63 @@ void		ft_putstrlpad_fd(char const *s, char c, size_t size, int fd);
 void		ft_putstrrpad_fd(char const *s, char c, size_t size, int fd);
 void		ft_putstrtab(char **tab);
 void		ft_putstrtab_fd(char **tab, int fd);
-int			convert_char(t_formatter *fmt, t_strbuffer *sb, va_list ap);
-int			convert_wchar(t_formatter *fmt, t_strbuffer *sb, va_list ap);
-int			convert_q(t_formatter *fmt, t_strbuffer *sb, va_list ap);
-int			convert_q_up(t_formatter *fmt, t_strbuffer *sb, va_list ap);
-int			convert_k(t_formatter *fmt, t_strbuffer *sb, va_list ap);
-int			convert_di(t_formatter *fmt, t_strbuffer *sb, va_list ap);
-int			convert_u(t_formatter *fmt, t_strbuffer *sb, va_list ap);
-int			convert_x(t_formatter *fmt, t_strbuffer *sb, va_list ap);
-int			convert_o(t_formatter *fmt, t_strbuffer *sb, va_list ap);
-int			convert_b(t_formatter *fmt, t_strbuffer *sb, va_list ap);
-int			convert_n(t_formatter *fmt, t_strbuffer *sb, va_list ap);
-int			set_coma(t_strbuffer *sb, int len);
-int			signed_integer(t_formatter *fmt, t_strbuffer *sb, va_list ap, int b);
-int			unsigned_integer(t_formatter *fmt, t_strbuffer *sb, va_list ap, int b);
-int			convert_m(t_formatter *fmt, t_strbuffer *sb, va_list ap);
-int			convert_r(t_formatter *fmt, t_strbuffer *sb, va_list ap);
-int			convert_p(t_formatter *fmt, t_strbuffer *sb, va_list ap);
-int			convert_str(t_formatter *fmt, t_strbuffer *sb, va_list ap);
-int			convert_wstr(t_formatter *fmt, t_strbuffer *sb, va_list ap);
-int			convert(t_strbuffer *sb, t_formatter *fmt, t_arglist *args);
-void		trial(int ret);
-int			handle_formatter(t_strbuffer *sb, char const **s, t_arglist *args,
-				int prev_len);
-int			is_flag(char c, t_formatter fmt);
-int			is_length(char c, t_formatter fmt, int v);
-void		init_buffers(t_strbuffer *sb1, t_strbuffer *sb2);
-void		init_args(t_arglist *args, va_list ap);
-void		get_arg_at(int pos, t_arglist *args);
+int	
+				fill_precision(t_conv *c, t_formatter *fmt);
 void
-				parse_formatter(const char **s, t_formatter *fmt, t_arglist *args);
-void		add(t_strbuffer *sb, const char *data, size_t len);
+				fill_width(t_conv *c, t_formatter *fmt);
+void
+				fill_width_chr(t_printf *pf, t_formatter *fmt, int conv_ret);
+int	
+				convert(t_printf *pf, t_formatter *fmt);
+int			convert_char(t_printf *pf, t_formatter *fmt, va_list ap);
+int			convert_wchar(t_printf *pf, t_formatter *fmt, va_list ap);
+int			convert_const(t_printf *pf, t_formatter *fmt);
+int			convert_q(t_printf *pf, t_formatter *fmt, va_list ap);
+int			convert_q_up(t_printf *pf, t_formatter *fmt, va_list ap);
+int			convert_k(t_printf *pf, t_formatter *fmt, va_list ap);
+void		compute_f(t_double *d);
+void		fill_dbl(t_double *d);
+int			convert_f(t_printf *pf, t_formatter *fmt, va_list ap);
+void		write_conv(t_conv *c, t_double *d, t_formatter *fmt);
+int			write_double(t_printf *pf, t_formatter *fmt, t_double *d);
+int			convert_di(t_printf *pf, t_formatter *fmt, va_list ap);
+int			convert_u(t_printf *pf, t_formatter *fmt, va_list ap);
+int			convert_x(t_printf *pf, t_formatter *fmt, va_list ap);
+int			convert_o(t_printf *pf, t_formatter *fmt, va_list ap);
+int			convert_b(t_printf *pf, t_formatter *fmt, va_list ap);
+int			convert_n(t_printf *pf, t_formatter *fmt, va_list ap);
+int			set_coma(t_conv *c, int len);
+int	
+				itoa_base(t_conv *c, intmax_t i, int base, char upcase);
+int			signed_integer(t_formatter *fmt, t_conv *c, va_list ap, int b);
+int			unsigned_integer(t_formatter *fmt, t_conv *c, va_list ap, int b);
+int			convert_m(t_printf *pf, t_formatter *fmt, va_list ap);
+int			convert_r(t_printf *pf, t_formatter *fmt, va_list ap);
+int			convert_p(t_printf *pf, t_formatter *fmt, va_list ap);
+int			convert_str(t_printf *pf, t_formatter *fmt, va_list ap);
+int			convert_wstr(t_printf *pf, t_formatter *fmt, va_list ap);
+void
+				parse_formatter(t_formatter *fmt, t_printf *pf);
+int			ft_printf(const char *format, ...);
+void		get_arg_at(int pos, t_arglist *args);
+int			handle_formatter(t_printf *pf);
+int			ft_vprintf(const char *format, va_list ap);
+void		str_power(unsigned char *p, long a, int b, int len);
+void		str_add(unsigned char *a, unsigned char *b, int len);
+void		str_multi(unsigned char *a, int b, int len);
+void		str_divi(unsigned char *a, int b, int len);
+void		str_divi_2(unsigned char *a, int len);
+int			is_length(char c, t_formatter fmt, int v);
+int			is_flag(char c, t_formatter fmt);
+char		*walk_format(char *s, int c);
 size_t		wchartoa(char *s, wint_t w);
 size_t		wstrtoa(char *s, const wchar_t *wstr);
 size_t		wstrntoa(char *s, const wchar_t *wstr, size_t n);
 int			check_unicode(wint_t *c);
-int			ft_asprintf(char **ret, const char *format, ...);
-int			ft_dprintf(int fd, const char *format, ...);
-int			ft_printf(const char *format, ...);
-int			ft_vasprintf(char **ret, const char *format, va_list ap);
-int			ft_vdprintf(int fd, const char *format, va_list ap);
-int			ft_vprintf(const char *format, va_list ap);
+void		print(char *s, int size);
+int			put(char *s, int len);
+size_t		bwrite(t_buffer *b, const char *s, size_t len);
+size_t		dblwrite(t_buffer *b, unsigned char *s, size_t len);
 void		ft_sortinttab(int *tab, size_t size);
 void		ft_sortstrtab(char **tab);
 int			ft_hasnodupl(char *str);

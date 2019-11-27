@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/11/25 17:45:34 by hben-yah          #+#    #+#              #
-#    Updated: 2019/11/25 17:45:34 by hben-yah         ###   ########.fr        #
+#    Created: 2019/11/27 10:57:27 by hben-yah          #+#    #+#              #
+#    Updated: 2019/11/27 10:57:27 by hben-yah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ FILES_C			=   \
 					list/ft_lstnew.c \
 					list/ft_lstrev.c \
 					math/ft_abs.c \
+					math/ft_ldabs.c \
 					math/ft_max.c \
 					math/ft_min.c \
 					math/ft_pow.c \
@@ -86,9 +87,11 @@ FILES_C			=   \
 					output/ft_putstrpad.c \
 					output/ft_putstrtab.c \
 					output/ft_putstrtab_fd.c \
+					printf/converter.c \
 					printf/converters/char.c \
 					printf/converters/color.c \
 					printf/converters/date.c \
+					printf/converters/double.c \
 					printf/converters/integer.c \
 					printf/converters/integer_plus.c \
 					printf/converters/integer_signed.c \
@@ -97,19 +100,12 @@ FILES_C			=   \
 					printf/converters/non_printable.c \
 					printf/converters/pointer.c \
 					printf/converters/string.c \
-					printf/core/converter.c \
-					printf/core/exception.c \
-					printf/core/formatter_handler.c \
-					printf/core/helper.c \
-					printf/core/parser.c \
-					printf/core/printer.c \
-					printf/core/wchar_handler.c \
-					printf/ft_asprintf.c \
-					printf/ft_dprintf.c \
+					printf/formatter_parser.c \
 					printf/ft_printf.c \
-					printf/ft_vasprintf.c \
-					printf/ft_vdprintf.c \
-					printf/ft_vprintf.c \
+					printf/strmath.c \
+					printf/tools.c \
+					printf/wchar.c \
+					printf/write.c \
 					sort/ft_sortinttab.c \
 					sort/ft_sortstrtab.c \
 					string/ft_hasnodupl.c \
@@ -196,7 +192,6 @@ SRCS_SD			= 	\
 					output \
 					printf \
 					printf/converters \
-					printf/core \
 					sort \
 					string \
 					string/stringbuffer \

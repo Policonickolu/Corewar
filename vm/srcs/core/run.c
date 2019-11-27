@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:04:15 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/25 17:45:15 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/27 11:27:41 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,21 +73,23 @@
 // 	return (hash);
 // }
 
-void				save_op(t_vm *vm, t_process *ps, int op_code)
+t_op		*get_op(int op_code)
 {
-	t_op			*seek;
+	if (op_code < 1 || op_code > 16)
+		return (NULL);
+	return (&op_tab[op_code - 1]);
+}
 
-	seek = op_tab;
-	while (seek->op_code && seek->op_code != op_code)
-		seek++;
-	ft_putendl2("opé : ", seek->name);
-	if (!(ps->op = ht_get(vm->operations, seek->name)))
+void				get_op_from_field(t_vm *vm, t_process *ps, int op_code)
+{
+	(void)vm;
+	if (!(ps->op = get_op(op_code)))
 	{
 		move_pc(ps, 1);
 		ps->sleep_cycles = 1;
 	}
 	else
-		ps->sleep_cycles = seek->nb_cycles - 2;
+		ps->sleep_cycles = ps->op->nb_cycles - 2;
 }
 
 // void		exec_process(t_vm *vm, t_process *ps)
@@ -112,13 +114,14 @@ void				save_op(t_vm *vm, t_process *ps, int op_code)
 
 void			exec_operation(t_vm *vm, t_process *process)
 {
-	process->op(vm, process);
+	g_op_func_tab[process->op->op_code - 1](vm, process);
+	process->op = NULL;
 }
 
 void			get_next_operation(t_vm *vm, t_process *process)
 {
-	process->pc_tmp = process->pc;
-	save_op(vm, process, (int)vm->field[process->pc]);
+	process->oc = process->pc;
+	get_op_from_field(vm, process, (int)vm->field[process->pc]);
 }
 
 void			exec_processes(t_vm *vm)
@@ -152,7 +155,7 @@ void	run_vm(t_vm *vm)
 		// 	vm->cycle = 0;
 		if (vm->cycle == vm->cycle_to_die)
 		{
-			//check_processes(vm);
+			check_processes(vm);
 			++vm->check;
 			if (vm->check == MAX_CHECKS || vm->live_calls >= NBR_LIVE)
 			{
@@ -162,7 +165,7 @@ void	run_vm(t_vm *vm)
 			vm->cycle = 0;
 			vm->live_calls = 0;
 		}
-		//dump
+		display_field(vm);
 		++vm->cycle;
 		++vm->total_cycle;
 	}

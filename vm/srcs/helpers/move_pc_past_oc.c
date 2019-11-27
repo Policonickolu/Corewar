@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_asprintf.c                                      :+:      :+:    :+:   */
+/*   move_pc_past_oc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/08 13:50:50 by hben-yah          #+#    #+#             */
-/*   Updated: 2018/08/08 15:26:03 by hben-yah         ###   ########.fr       */
+/*   Created: 2019/11/27 09:07:44 by hben-yah          #+#    #+#             */
+/*   Updated: 2019/11/27 09:10:42 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "vm.h"
 
-int		ft_asprintf(char **ret, const char *format, ...)
+void	move_pc_past_oc(t_process *ps)
 {
-	va_list	ap;
-	int		len;
-
-	va_start(ap, format);
-	len = ft_vasprintf(ret, format, ap);
-	va_end(ap);
-	return (len);
+	ps->pc = ps->oc;
+	move_pc(ps, 1);
 }

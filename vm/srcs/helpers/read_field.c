@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printer.c                                          :+:      :+:    :+:   */
+/*   read_field.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/08 13:57:53 by hben-yah          #+#    #+#             */
-/*   Updated: 2018/08/08 13:58:13 by hben-yah         ###   ########.fr       */
+/*   Created: 2019/11/27 08:44:47 by hben-yah          #+#    #+#             */
+/*   Updated: 2019/11/27 09:15:23 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "vm.h"
 
-void	add(t_strbuffer *sb, const char *data, size_t len)
+void	read_field(t_vm *vm, t_process *ps, int *dst, size_t size)
 {
-	trial(sb_add(sb, data, len));
+	int		val;
+
+	val = 0;
+	while (size--)
+	{
+		move_oc(ps, 1);
+		val = (val << 8) | vm->field[ps->oc];
+	}
+	*dst = val;
 }

@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 08:09:19 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/27 11:14:59 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/30 11:24:12 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define VM_H
 
 #include <stdlib.h>
+#include <stdint.h>
 # include "op.h"
 # include "libft.h"
 
@@ -56,10 +57,6 @@
 # define RESET   		"\x1b[0m"
 
 
-
-
-
-
 /*
 ** Structures
 */
@@ -88,20 +85,19 @@ typedef struct			s_champ
 typedef struct			s_process
 {
 	int					id;
-	char				*name;
 	int					number;
+	char				*name;
 
-	unsigned char		regs[REG_NUMBER * REG_SIZE];
+	intmax_t			registers[REG_NUMBER];
 	int					pc; // program counter
 	int					oc; // operation counter
 	char				carry;
 
 
-	int					live_calls;
-	int					sleep_cycles;
+	int					lives;
+	int					sleep;
 
 	t_op				*op;
-	//void				(*op_func)();
 
 	struct s_process	*next;
 }						t_process;
@@ -121,12 +117,12 @@ typedef struct			s_vm
 	// int					affx;
 	// int					affx2;
 
-	int					cycle;
-	int					total_cycle;
-	int					cycle_to_die;
-	int					check;
+	int					cycles;
+	int					total_cycles;
+	int					cycles_to_die;
+	int					checks;
 	
-	int					live_calls;
+	int					lives;
 	int					last_live;
 	char				*last_name;
 

@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 09:46:42 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/27 11:13:56 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/30 11:37:25 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ static void			print_line(t_vm *vm, char *bytes, int pane, int byte_width)
 static void			print_player_info(t_process *ps)
 {
 	ft_printf("Joueur %d (%s) ", ps->number, ps->name);
-	ft_printf("%s ", (ps->live_calls) ? "déclaré vivant" : "manquant");
-	ft_printf("et restera en sommeil pendant (cycles) %-20d\n", ps->sleep_cycles);
+	ft_printf("%s ", (ps->lives) ? "déclaré vivant" : "manquant");
+	ft_printf("et restera en sommeil pendant (cycles) %-20d\n", ps->sleep);
 	ft_printf(RESET);
 }
 
@@ -69,10 +69,10 @@ static void			print_cycle_info(t_vm *vm)
 	int				player_num;
 
 	player_num = 0;
-	ft_printf("CYCLE NUMBER[%6d]   ", vm->total_cycle);
-	ft_printf("CYCLE[%6d]   ", vm->cycle);
-	ft_printf("CYCLE_TO_DIE[%6d]   ", vm->cycle_to_die);
-	ft_printf("CHECKS[%6d]\n\n", vm->check);
+	ft_printf("CYCLE NUMBER[%6d]   ", vm->total_cycles);
+	ft_printf("CYCLE[%6d]   ", vm->cycles);
+	ft_printf("CYCLE_TO_DIE[%6d]   ", vm->cycles_to_die);
+	ft_printf("CHECKS[%6d]\n\n", vm->checks);
 	while (player_num++ < MAX_PLAYERS && (ps = vm->process))
 	{
 		while (ps)
@@ -113,7 +113,7 @@ void				dump_memory(t_vm *vm, int byte_width, int exit_flag)
 
 void		display_field(t_vm *vm)
 {
-	if (vm->dump == vm->total_cycle)
+	if (vm->dump == vm->total_cycles)
 		dump_memory(vm, 4, 1);
 	if (vm->options & VM_OP_D)
 	{

@@ -1,19 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_new_address.c                                  :+:      :+:    :+:   */
+/*   insert_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/24 17:09:41 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/27 09:12:49 by hben-yah         ###   ########.fr       */
+/*   Created: 2019/11/30 15:26:34 by hben-yah          #+#    #+#             */
+/*   Updated: 2019/11/30 15:32:21 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		get_new_address(t_process *ps, int val)
+void	insert_process(t_vm *vm, t_process *new)
 {
-	val += ps->pc;
-	return ((val % MEM_SIZE) + (val < 0 ? MEM_SIZE : 0));
+	t_process	*ps;
+
+	ps = vm->process;
+	while (ps)
+	{
+		if (ps->number == new->number)
+		{
+			while (ps->next && ps->next->number == new->number)
+				ps = ps->next;
+			new->next = ps->next;
+			ps->next = new;
+			break ;
+		}
+		ps = ps->next;
+	}
 }

@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zjmp.c                                             :+:      :+:    :+:   */
+/*   get_param_type.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/30 14:49:20 by hben-yah         ###   ########.fr       */
+/*   Created: 2019/11/30 12:26:38 by hben-yah          #+#    #+#             */
+/*   Updated: 2019/11/30 12:27:30 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vm.h"
-
-void		operate_zjmp(t_vm *vm, t_process *ps)
+int		get_param_type(unsigned char ocp, int param)
 {
-	if (ps->carry)
-		move_oc(ps, read_field(vm, ps, 2) % IDX_MOD);
-	else
-		move_pc(ps, 3);
+	if (param == 1)
+		return ((ocp >> 6) & 3);
+	if (param == 2)
+		return ((ocp >> 4) & 3);
+	if (param == 3)
+		return ((ocp >> 2) & 3);
+	if (param == 4)
+		return (ocp & 3);
+	return (0);
 }

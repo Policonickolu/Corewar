@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 17:08:49 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/27 08:54:11 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/30 10:41:39 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	move_pc(t_process *ps, int val)
 {
-	ps->pc = get_new_address(ps, val);
+	ps->pc = get_rel_address(ps, val);
 }

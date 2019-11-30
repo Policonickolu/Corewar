@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/27 10:57:27 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/27 10:57:27 by hben-yah         ###   ########.fr       */
+/*   Created: 2019/11/30 16:22:56 by hben-yah          #+#    #+#             */
+/*   Updated: 2019/11/30 16:22:56 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,21 @@ int				check_vm(t_vm *vm);
 int				handle_arguments(t_vm *vm, int ac, char **av);
 int				parse_options(int *options, char *arg);
 int				parse_arguments(t_vm *vm, int ac, char **av);
+void			check_processes(t_vm *vm);
+t_op			*get_op_func_from_tab(int op_code);
+void			set_op_function(t_process *ps, int op_code);
+void			exec_operation(t_vm *vm, t_process *process);
+void			set_next_operation(t_vm *vm, t_process *process);
+void			exec_processes(t_vm *vm);
 void			vm_exit(t_vm *vm, char *mes);
 void			init_process(t_vm *vm, t_champ *champ, size_t pc);
 void			init_processes(t_vm *vm);
 int				main(int ac, char **av);
-t_op			*get_op(int op_code);
-void			get_op_from_field(t_vm *vm, t_process *ps, int op_code);
-void			exec_operation(t_vm *vm, t_process *process);
-void			get_next_operation(t_vm *vm, t_process *process);
-void			exec_processes(t_vm *vm);
 void			run_vm(t_vm *vm);
 void			del_champ(t_champ **champ);
 void			del_champ_lst(t_champ **lst);
+void			del_process(t_process **process);
+void			del_process_lst(t_process **lst);
 void			del_vm(t_vm *vm);
 int				no_champion_error(void);
 int				too_many_champions_error(void);
@@ -48,15 +51,21 @@ int				invalid_file_error(void);
 int				invalid_option_error(char arg);
 int				already_attributed_number_error(void);
 int				n_arg_error(void);
+t_process			*dup_process(t_vm *vm, t_process *src);
 t_champ			*get_champ(t_vm *vm, int number);
-int				get_new_address(t_process *ps, int val);
-int				get_reg(t_process *ps, int reg, void *val, size_t size);
+int				get_param_type(unsigned char ocp, int param);
+intmax_t			get_reg_val(t_process *ps, int reg);
+int				get_rel_address(t_process *ps, int move);
+int				get_type_size(int type);
+void			insert_process(t_vm *vm, t_process *new);
 void			move_oc(t_process *ps, int val);
 void			move_pc(t_process *ps, int val);
 void			move_pc_past_oc(t_process *ps);
-void			read_field(t_vm *vm, t_process *ps, int *dst, size_t size);
-int				set_reg(t_process *ps, int reg, void *val, size_t size);
-void			toggle_carry(t_process *ps, int value);
+intmax_t			read_field(t_vm *vm, t_process *ps, size_t size);
+intmax_t			read_field_at(t_vm *vm, t_process *ps, intmax_t i, size_t size);
+void			set_carry(t_process *ps, intmax_t value);
+void			set_reg_val(t_process *ps, int reg, intmax_t val);
+void			write_field_at(t_vm *vm, t_process *ps, intmax_t i, intmax_t val);
 void			operate_add(t_vm *vm, t_process *ps);
 void			operate_aff(t_vm *vm, t_process *ps);
 void			operate_and(t_vm *vm, t_process *ps);
@@ -78,7 +87,7 @@ void			display_field(t_vm *vm);
 void			print_champion(t_vm *vm);
 int				put_usage(void);
 int				check_numbers(header_t *header);
-int	 read_champion(t_champ *champ);
-int	 read_champions(t_vm *vm);
+int		read_champion(t_champ *champ);
+int		read_champions(t_vm *vm);
 
 #endif

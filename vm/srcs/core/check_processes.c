@@ -6,11 +6,12 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:30:29 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/27 11:40:51 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/30 10:58:36 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+#include "libft.h"
 
 static void	kill_process(t_vm *vm, t_process **ps, t_process *prev)
 {
@@ -37,18 +38,17 @@ void		check_processes(t_vm *vm)
 	prev = NULL;
 	while (ps)
 	{
-		if (ps->live_calls == 0)
+		if (ps->lives)
 		{
-			ft_strnbr("Les processus ", ps->number,
-				" n'a pas donné signe de vie\n");
-			kill_process(vm, &ps, prev);
-		}
-		else
-		{
-			ps->live_calls = 0;
+			ps->lives = 0;
 			prev = ps;
 			ps = ps->next;
 		}
+		else
+		{
+			ft_putstrnbr("Les processus ", ps->number,
+				" n'a pas donné signe de vie\n");
+			kill_process(vm, &ps, prev);
+		}
 	}
 }
-

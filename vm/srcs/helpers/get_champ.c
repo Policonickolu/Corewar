@@ -6,13 +6,13 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 09:08:56 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/27 09:10:35 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/30 10:42:02 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-t_champ	*get_champ(t_vm *vm, int number)
+t_champ		*get_champ(t_vm *vm, int number)
 {
 	t_champ		*champ;
 

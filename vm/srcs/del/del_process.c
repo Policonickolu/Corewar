@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 09:05:49 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/27 11:35:23 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/30 09:48:48 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	del_process(t_process **process)
 	{
 		todel = *process;
 		*process = (*process)->next;
-		free(todel->file);
+		free(todel->name);
 		free(todel);
 	}
 }

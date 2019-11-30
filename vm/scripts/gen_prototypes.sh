@@ -29,7 +29,7 @@ echo " by hben-yah         ###   ########.fr       */
 " >> includes/prototypes.h
 find srcs -name '*.c' ! -name 'old_*.c' -exec cat {} \; | grep -v static | grep -v -E "^const" | grep -A 1 -E "^[a-z]+" | grep -v -E "(;|	return|	while|	if|=|->|\?|:|{|}|\-\-)" |
 sed -e s/\)' '*\$/\)\;/g | sed -e s/\)\$/\)\;/g | tr -s '\n' '?' | sed -e s/\;\?/\;\!/g | tr -s '!' '\n' | tr -d '?' | tr -s '	' '	' |
-sed -e 's/	/			/g' | sed -e 's/^int/int	/g' | sed -e 's/^	/			/g' >> includes/prototypes.h
+sed -e 's/	/			/g' | sed -e 's/^int[^m]/int		/g' | sed -e 's/^	/			/g' >> includes/prototypes.h
 echo "
 #endif" >> includes/prototypes.h
 #find srcs -name '*.c' -exec cat {} \; | tr -s '\t\n' ' ' | grep -E "([a-z0-9_*]+ )?[a-z0-9_*]+ [a-z0-9_*]+\([a-z0-9_,() *]+\) {" -o | sed -e 's/ {//g' | sed -e 's/ /                            /'

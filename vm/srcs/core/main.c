@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 08:13:53 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/27 10:24:19 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/30 11:27:05 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int		main(int ac, char **av)
 	// 	return (1);
 	if (!(ret = handle_arguments(&vm, ac, av)))
 	{
-		vm.cycle = 1;
-		vm.total_cycle = 1;
-		vm.cycle_to_die = CYCLE_TO_DIE;
+		vm.cycles = 1;
+		vm.total_cycles = 1;
+		vm.cycles_to_die = CYCLE_TO_DIE;
 		if (!(ret = read_champions(&vm)))
 		{
 			run_vm(&vm);

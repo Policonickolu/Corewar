@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/11/27 10:57:27 by hben-yah          #+#    #+#              #
-#    Updated: 2019/11/27 10:57:27 by hben-yah         ###   ########.fr        #
+#    Created: 2019/11/30 16:22:56 by hben-yah          #+#    #+#              #
+#    Updated: 2019/11/30 16:22:56 by hben-yah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,12 +22,14 @@ FILES_C			=   \
 					arguments/handler.c \
 					arguments/options.c \
 					arguments/parser.c \
+					core/check_processes.c \
 					core/exec_processes.c \
 					core/exit.c \
 					core/init_processes.c \
 					core/main.c \
 					core/run.c \
 					del/del_champ.c \
+					del/del_process.c \
 					del/del_vm.c \
 					error/champions_error.c \
 					error/dump_arg_error.c \
@@ -35,15 +37,21 @@ FILES_C			=   \
 					error/invalid_file_error.c \
 					error/invalid_option_error.c \
 					error/number_error.c \
+					helpers/dup_process.c \
 					helpers/get_champ.c \
-					helpers/get_new_address.c \
-					helpers/get_reg.c \
+					helpers/get_param_type.c \
+					helpers/get_reg_val.c \
+					helpers/get_rel_address.c \
+					helpers/get_type_size.c \
+					helpers/insert_process.c \
 					helpers/move_oc.c \
 					helpers/move_pc.c \
 					helpers/move_pc_past_oc.c \
 					helpers/read_field.c \
-					helpers/set_reg.c \
-					helpers/toggle_carry.c \
+					helpers/read_field_at.c \
+					helpers/set_carry.c \
+					helpers/set_reg_val.c \
+					helpers/write_field_at.c \
 					operations/add.c \
 					operations/aff.c \
 					operations/and.c \

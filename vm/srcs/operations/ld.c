@@ -6,61 +6,27 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/27 12:19:30 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/11/30 16:09:21 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-unsigned char	check_ocp_type(unsigned char ocp, int param)
-{
-	if (param == 1)
-		return ((ocp >> 6) & 3);
-	if (param == 2)
-		return ((ocp >> 4) & 3);
-	if (param == 3)
-		return ((ocp >> 2) & 3);
-	if (param == 4)
-		return (ocp & 3);
-	return (0)
-}
-
-int		get_param_size(unsigned char type)
-{
-	if (type == REG_CODE)
-		return (REG_SIZE);
-	else if (type == DIR_CODE)
-		return (DIR_SIZE);
-	else if (type == IND_CODE)
-		return (IND_SIZE);
-	return (0);
-}
-
 void		operate_ld(t_vm *vm, t_process *ps)
 {
-	unsigned char	ocp;
-	int				type;
-	int				size;
-	int				p1;
-	int				p2;
+	int				param_type;
+	intmax_t		src;
+	char			dst_reg;
 
 	move_oc(ps, 1);
-	ocp = vm->field[ps->oc];
-	type = check_ocp_type(ocp, 1);
-	size = get_param_size(type);
-
-	read_field(vm, ps, &p1, size);
-	read_field(vm, ps, &p2, REG_SIZE);
-
-//t_process *ps, int reg, void *val, size_t size
-	if (type == DIR_CODE)
-		set_reg(ps, p2, p1, DIR_SIZE);
-	else
-	{
-		p1 = get_new_address(ps, p1 % IDX_MOD);
-		load_bytes(vm, ps, p2, p1);
-		// read field at p1 and write in p2
-	}
-	toggle_carry(ps, ps->r[get_r(p2)]);
+	param_type = get_param_type(vm->field[ps->oc], 1);
+	src = read_field(vm, ps, get_type_size(param_type));
+	dst_reg = (char)read_field(vm, ps, 1);
+	if (param_type == IND_CODE)
+		src = get_rel_address(ps, src % IDX_MOD);
+	src = read_field_at(vm, ps, src, DIR_SIZE);
+	set_reg_val(ps, dst_reg, src);
+	set_carry(ps, src);
 	move_pc_past_oc(ps);
 }
+

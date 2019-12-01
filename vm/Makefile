@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/11/30 16:22:56 by hben-yah          #+#    #+#              #
-#    Updated: 2019/11/30 16:22:56 by hben-yah         ###   ########.fr        #
+#    Created: 2019/12/01 15:24:07 by hben-yah          #+#    #+#              #
+#    Updated: 2019/12/01 15:24:07 by hben-yah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,7 @@ FILES_C			=   \
 					printer/display_field.c \
 					printer/print_champion.c \
 					printer/usage.c \
+					printer/visualizer.c \
 					reader/reader.c
 FILES_O			=	$(FILES_C:.c=.o)
 FILES_H			=	\
@@ -110,6 +111,9 @@ LFT_H			=	\
 					libft.h
 
 
+# Ncurses
+CUR				=	-lncurses
+
 # Op
 OP_D			=	../op
 
@@ -122,7 +126,7 @@ dev				:	debug $(NAME)
 
 $(NAME)			:	$(LFT_P) $(OBJS)
 					@echo "\nAssemblage et création de l'exécutable $(NAME)"
-					@$(COMP) $(FLAG) $(OBJS) $(LFT_P) -o $(NAME)
+					@$(COMP) $(FLAG) $(OBJS) $(LFT_P) $(CUR) -o $(NAME)
 					@echo "Terminé"
 
 $(LFT_P)		:	force

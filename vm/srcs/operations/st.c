@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/30 16:09:42 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/12/01 13:39:59 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,5 @@ void		operate_st(t_vm *vm, t_process *ps)
 	else
 		set_reg_val(ps, dst, src_reg);
 	set_carry(ps, src_reg);
-	move_pc_past_oc(ps);
+	move_pc_past_oc(vm, ps);
 }

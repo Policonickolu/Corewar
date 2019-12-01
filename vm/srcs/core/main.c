@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 08:13:53 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/30 11:27:05 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/12/01 15:33:39 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,70 @@
 // 	return (0);
 // }
 
+void rectangle(int y1, int x1, int y2, int x2)
+{
+    mvhline(y1, x1, 0, x2-x1);
+    mvhline(y2, x1, 0, x2-x1);
+    mvvline(y1, x1, 0, y2-y1);
+    mvvline(y1, x2, 0, y2-y1);
+    mvaddch(y1, x1, ACS_ULCORNER);
+    mvaddch(y2, x1, ACS_LLCORNER);
+    mvaddch(y1, x2, ACS_URCORNER);
+    mvaddch(y2, x2, ACS_LRCORNER);
+}
+
+void	init_field(void)
+{
+	int i;
+	int x;
+	int y;
+
+	rectangle(FIELD_OFFSET_Y - 1, FIELD_OFFSET_X - 2,
+		FIELD_OFFSET_Y + (MEM_SIZE / FIELD_WIDTH * 3) + 1, FIELD_OFFSET_X + (FIELD_WIDTH));
+	rectangle(INFO_OFFSET_Y - 1, INFO_OFFSET_X - 2,
+		INFO_OFFSET_Y + (MEM_SIZE / FIELD_WIDTH * 3) + 1, INFO_OFFSET_X + (INFO_WIDTH));
+	x = FIELD_OFFSET_X;
+	y = FIELD_OFFSET_Y - 2;
+	i = 0;
+	while (i < FIELD_WIDTH / 3)
+	{
+		mvaddch(y, x++, '0' + (i / 10 % 10));
+		mvaddch(y, x++, '0' + (i++ % 10));
+		mvaddch(y, x++, ' ');
+	}
+	y += 2;
+	i = 0;
+	while (i < (MEM_SIZE / FIELD_WIDTH * 3) + 1)
+	{	
+		x = FIELD_OFFSET_X - 5;
+		mvaddch(y, x++, '0' + (i / 10 % 10));
+		mvaddch(y++, x, '0' + (i++ % 10));
+	}
+}
+
+void	init_visualizer(void)
+{
+	initscr();
+	cbreak();
+	noecho();
+	clear();
+	start_color();
+	init_pair(1, COLOR_RED, COLOR_BLACK);
+	init_pair(2, COLOR_CYAN, COLOR_BLACK);
+	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(4, COLOR_BLUE, COLOR_BLACK);
+	init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
+	init_pair(6, COLOR_GREEN, COLOR_BLACK);
+	init_pair(7, COLOR_WHITE, COLOR_BLACK);
+	init_field();
+}
+
+void	reset_visualizer(void)
+{
+	getch();
+	endwin();
+}
+
 int		main(int ac, char **av)
 {
 	t_vm	vm;
@@ -52,6 +116,8 @@ int		main(int ac, char **av)
 	// 	return (1);
 	if (!(ret = handle_arguments(&vm, ac, av)))
 	{
+		if (vm.options & VM_OP_G)
+			init_visualizer();
 		vm.cycles = 1;
 		vm.total_cycles = 1;
 		vm.cycles_to_die = CYCLE_TO_DIE;
@@ -61,6 +127,8 @@ int		main(int ac, char **av)
 			//print_results(vm);
 		}
 		//print_champion(&vm);
+		if (vm.options & VM_OP_G)
+			reset_visualizer();
 	}
 	del_vm(&vm);
 	return (ret);

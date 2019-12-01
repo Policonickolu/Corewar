@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/30 16:12:08 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/12/01 13:40:14 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ void		operate_lld(t_vm *vm, t_process *ps)
 	src = read_field_at(vm, ps, src, DIR_SIZE);
 	set_reg_val(ps, dst_reg, src);
 	set_carry(ps, src);
-	move_pc_past_oc(ps);
+	move_pc_past_oc(vm, ps);
 }

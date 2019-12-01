@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 09:46:42 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/30 11:37:25 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/12/01 10:35:11 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,44 @@ void				dump_memory(t_vm *vm, int byte_width, int exit_flag)
 	print_cycle_info(vm);
 }
 
+// void	print_memory(const void *addr, size_t size)
+// {
+// 	unsigned char *a = (unsigned char *)addr;
+// 	char *b = "0123456789abcdef";
+// 	unsigned int i = 0;
+// 	unsigned int j;
+// 	while (i < size)
+// 	{
+// 		j = 0;
+// 		while (j < 16 && i + j < size)
+// 		{
+// 			write(1, &b[*(a + i + j) / 16], 1);
+// 			write(1, &b[*(a + i + j) % 16], 1);
+// 			if (j % 2)
+// 				write(1, " ", 1);
+// 			++j;
+// 		}
+// 		while (j < 16)
+// 		{
+// 			write(1, "  ", 2);
+// 			if (j % 2)
+// 				write(1, " ", 1);
+// 			++j;
+// 		}
+// 		j = 0;
+// 		while (j < 16 && i + j < size)
+// 		{
+// 			if (*(a + i + j) >= 32 && *(a + i + j) <= 126)
+// 				write(1, a + i + j, 1);
+// 			else
+// 				write(1, ".", 1);
+// 			++j;
+// 		}
+// 		write(1, "\n", 1);
+// 		i += 16;
+// 	}
+// }
+
 void		display_field(t_vm *vm)
 {
 	if (vm->dump == vm->total_cycles)
@@ -119,9 +157,10 @@ void		display_field(t_vm *vm)
 	{
 		// if (!(vm->total_cycle % 20))
 		// 	ft_printf(CLEAR);
-		ft_printf(CUR_RESET);
-		dump_memory(vm, 8, 0);
-		usleep(10000);
+		//ft_printf(CUR_RESET);
+		//dump_memory(vm, 8, 0);
+		//usleep(10000);
 	}
+
 	//exit(0);
 }

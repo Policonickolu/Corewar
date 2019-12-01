@@ -6,15 +6,16 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 08:09:19 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/30 11:24:12 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/12/01 12:30:36 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VM_H
 # define VM_H
 
-#include <stdlib.h>
-#include <stdint.h>
+# include <stdlib.h>
+# include <stdint.h>
+# include <curses.h>
 # include "op.h"
 # include "libft.h"
 
@@ -24,17 +25,33 @@
 
 # define VM_NAME				"Corewar"
 
-# define VM_OPTIONS				"hd"
-# define VM_OP_H				1
-# define VM_OP_D				2
+# define VM_OPTIONS				"hdavg"
+# define VM_OP_H				1	// helper
+# define VM_OP_D				2	// debug
+# define VM_OP_A				4	// aff
+# define VM_OP_V				8	// verbose
+# define VM_OP_G				16	// visu grid
 
 # define STR_EXPAND(tok) #tok
 # define STR(tok) STR_EXPAND(tok)
 
 # define CW_HASHTAB_SIZE		64
 
+/*
+** Display
+*/
 
+# define FIELD_WIDTH		(3*64)
+# define FIELD_OFFSET_X		5
+# define FIELD_OFFSET_Y		5
 
+# define INFO_WIDTH			50
+# define INFO_OFFSET_X		FIELD_OFFSET_X + FIELD_WIDTH + 2
+# define INFO_OFFSET_Y		5
+
+/*
+** Colors
+*/
 
 # define SIZE_OF_BUFF	64
 # define CLEAR			"\x1b[H\x1b[2J"

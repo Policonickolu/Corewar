@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:30:29 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/30 10:58:36 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/12/01 15:23:52 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void		check_processes(t_vm *vm)
 		{
 			ft_putstrnbr("Les processus ", ps->number,
 				" n'a pas donné signe de vie\n");
+			if (vm->options & VM_OP_G)
+				print_val(ps->pc, (unsigned char)vm->field[ps->pc], ps->number, 0);
 			kill_process(vm, &ps, prev);
 		}
 	}

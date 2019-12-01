@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/30 16:03:38 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/12/01 13:39:26 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ void		operate_ldi(t_vm *vm, t_process *ps)
 	v3 = (char)read_field(vm, ps, 1);
 	set_reg_val(ps, v3, v1);
 	set_carry(ps, v1);
-	move_pc_past_oc(ps);
+	move_pc_past_oc(vm, ps);
 }

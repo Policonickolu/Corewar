@@ -55,6 +55,9 @@ find ../libft/includes -name '*.h' -exec basename {} \; | sed -e '$ ! s/$/ \\/' 
 
 echo "
 
+# Ncurses
+CUR				=	-lncurses
+
 # Op
 OP_D			=	../op
 
@@ -67,7 +70,7 @@ dev				:	debug \$(NAME)
 
 \$(NAME)			:	\$(LFT_P) \$(OBJS)
 					@echo \"\\\nAssemblage et création de l'exécutable \$(NAME)\"
-					@\$(COMP) \$(FLAG) \$(OBJS) \$(LFT_P) -o \$(NAME)
+					@\$(COMP) \$(FLAG) \$(OBJS) \$(LFT_P) \$(CUR) -o \$(NAME)
 					@echo \"Terminé\"
 
 \$(LFT_P)		:	force

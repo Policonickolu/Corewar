@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:57:40 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/01 12:55:01 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/12/03 10:34:22 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ void	init_process(t_vm *vm, t_champ *champ, size_t pc)
 	process->id = ++vm->n_process;
 	vm->process = process;
 	ft_memcpy(vm->field + pc, champ->prog, champ->header.prog_size);
-	if (vm->options & VM_OP_G)
-		visu_write_prog(vm, champ, pc);
+	display_programs(vm, champ, pc);
 }
 
 void	init_processes(t_vm *vm)

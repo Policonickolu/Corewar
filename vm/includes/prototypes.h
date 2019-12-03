@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/01 15:24:07 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/01 15:24:07 by hben-yah         ###   ########.fr       */
+/*   Created: 2019/12/03 11:59:32 by hben-yah          #+#    #+#             */
+/*   Updated: 2019/12/03 11:59:32 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,6 @@ void			exec_processes(t_vm *vm);
 void			vm_exit(t_vm *vm, char *mes);
 void			init_process(t_vm *vm, t_champ *champ, size_t pc);
 void			init_processes(t_vm *vm);
-void rectangle(int y1, int x1, int y2, int x2);
-void			init_field(void);
-void			init_visualizer(void);
-void			reset_visualizer(void);
 int				main(int ac, char **av);
 void			run_vm(t_vm *vm);
 void			del_champ(t_champ **champ);
@@ -45,6 +41,13 @@ void			del_champ_lst(t_champ **lst);
 void			del_process(t_process **process);
 void			del_process_lst(t_process **lst);
 void			del_vm(t_vm *vm);
+void			draw_rectangle(int y1, int x1, int y2, int x2);
+void			display_boxes(t_vm *vm);
+void			display_numbers(t_vm *vm);
+void			init_display(t_vm *vm);
+void			put_dead_process(t_vm *vm, int number);
+void			display_programs(t_vm *vm, t_champ *champ, int pc);
+void			reset_display(t_vm *vm);
 int				no_champion_error(void);
 int				too_many_champions_error(void);
 int				missing_champion_error(void);
@@ -91,7 +94,6 @@ void			dump_memory(t_vm *vm, int byte_width, int exit_flag);
 void			display_field(t_vm *vm);
 void			print_champion(t_vm *vm);
 int				put_usage(void);
-void			visu_write_prog(t_vm *vm, t_champ *champ, int pc);
 int				check_numbers(header_t *header);
 int		read_champion(t_champ *champ);
 int		read_champions(t_vm *vm);

@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 08:09:19 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/01 12:30:36 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/12/03 11:54:05 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@
 
 # define VM_NAME				"Corewar"
 
-# define VM_OPTIONS				"hdavg"
+# define VM_OPTIONS				"hdavc"
 # define VM_OP_H				1	// helper
 # define VM_OP_D				2	// debug
 # define VM_OP_A				4	// aff
 # define VM_OP_V				8	// verbose
-# define VM_OP_G				16	// visu grid
+# define VM_OP_C				16	// visu ncurse
 
 # define STR_EXPAND(tok) #tok
 # define STR(tok) STR_EXPAND(tok)
@@ -48,6 +48,14 @@
 # define INFO_WIDTH			50
 # define INFO_OFFSET_X		FIELD_OFFSET_X + FIELD_WIDTH + 2
 # define INFO_OFFSET_Y		5
+
+# define VERB_WIDTH			50
+# define VERB_OFFSET_X		INFO_OFFSET_X + INFO_WIDTH + 2
+# define VERB_OFFSET_Y		5
+
+# define LEG_WIDTH			FIELD_WIDTH + INFO_WIDTH + VERB_WIDTH
+# define LEG_HEIGHT			10
+# define LEG_OFFSET_X		FIELD_OFFSET_X
 
 /*
 ** Colors
@@ -155,11 +163,15 @@ typedef struct			s_vm
 	
 	//t_hashtab			*operations;
 
-	//t_ps_op				*ops_queue;
+	//t_ps_op			*ops_queue;
+	int					grid_height;
+	WINDOW				*game;
+	WINDOW				*out;
 }						t_vm;
 
 extern t_op				op_tab[17];
-extern void	(*g_op_func_tab[17])(t_vm *, t_process *);
+extern void				(*g_op_func_tab[17])(t_vm *, t_process *);
+extern char				*g_base;
 
 typedef void			(*t_operation_code)(t_vm *vm, t_process *ps);
 

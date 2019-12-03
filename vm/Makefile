@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/12/01 15:24:07 by hben-yah          #+#    #+#              #
-#    Updated: 2019/12/01 15:24:07 by hben-yah         ###   ########.fr        #
+#    Created: 2019/12/03 11:59:32 by hben-yah          #+#    #+#              #
+#    Updated: 2019/12/03 11:59:32 by hben-yah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,10 @@ FILES_C			=   \
 					del/del_champ.c \
 					del/del_process.c \
 					del/del_vm.c \
+					display/init.c \
+					display/output1.c \
+					display/programs.c \
+					display/reset.c \
 					error/champions_error.c \
 					error/dump_arg_error.c \
 					error/file_not_found_error.c \
@@ -72,7 +76,6 @@ FILES_C			=   \
 					printer/display_field.c \
 					printer/print_champion.c \
 					printer/usage.c \
-					printer/visualizer.c \
 					reader/reader.c
 FILES_O			=	$(FILES_C:.c=.o)
 FILES_H			=	\
@@ -84,6 +87,7 @@ SRCS_SD			= 	\
 					arguments \
 					core \
 					del \
+					display \
 					error \
 					helpers \
 					operations \

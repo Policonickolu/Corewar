@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 08:09:19 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/03 11:54:05 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/12/05 09:16:34 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 ** Display
 */
 
-# define FIELD_WIDTH		(3*64)
+# define FIELD_WIDTH		192
 # define FIELD_OFFSET_X		5
 # define FIELD_OFFSET_Y		5
 
@@ -49,13 +49,8 @@
 # define INFO_OFFSET_X		FIELD_OFFSET_X + FIELD_WIDTH + 2
 # define INFO_OFFSET_Y		5
 
-# define VERB_WIDTH			50
-# define VERB_OFFSET_X		INFO_OFFSET_X + INFO_WIDTH + 2
-# define VERB_OFFSET_Y		5
+# define W_GAME_WIDTH		251
 
-# define LEG_WIDTH			FIELD_WIDTH + INFO_WIDTH + VERB_WIDTH
-# define LEG_HEIGHT			10
-# define LEG_OFFSET_X		FIELD_OFFSET_X
 
 /*
 ** Colors
@@ -127,6 +122,15 @@ typedef struct			s_process
 	struct s_process	*next;
 }						t_process;
 
+typedef struct			s_display
+{
+	int					height;
+	int					width;
+	int					speed;
+	WINDOW				*game;
+	WINDOW				*out;
+}						t_display;
+
 
 typedef struct			s_vm
 {
@@ -164,9 +168,7 @@ typedef struct			s_vm
 	//t_hashtab			*operations;
 
 	//t_ps_op			*ops_queue;
-	int					grid_height;
-	WINDOW				*game;
-	WINDOW				*out;
+	t_display			display;
 }						t_vm;
 
 extern t_op				op_tab[17];

@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 08:13:53 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/03 11:58:59 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/12/05 08:45:27 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		main(int ac, char **av)
 		vm.cycles_to_die = CYCLE_TO_DIE;
 		if (!(ret = read_champions(&vm)))
 		{
-			init_display(&vm);
+			init_display(&vm);			
 			run_vm(&vm);
 			reset_display(&vm);
 		}

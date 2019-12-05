@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 15:26:34 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/11/30 15:32:21 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/12/05 09:32:03 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	insert_process(t_vm *vm, t_process *new)
 				ps = ps->next;
 			new->next = ps->next;
 			ps->next = new;
+			++vm->n_process;
 			break ;
 		}
 		ps = ps->next;

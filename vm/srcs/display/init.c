@@ -6,39 +6,33 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 08:45:30 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/03 12:20:13 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/12/05 11:54:03 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void			draw_rectangle(int y1, int x1, int y2, int x2)
-{
-    mvhline(y1, x1, 0, x2-x1);
-    mvhline(y2, x1, 0, x2-x1);
-    mvvline(y1, x1, 0, y2-y1);
-    mvvline(y1, x2, 0, y2-y1);
-    mvaddch(y1, x1, ACS_ULCORNER);
-    mvaddch(y2, x1, ACS_LLCORNER);
-    mvaddch(y1, x2, ACS_URCORNER);
-    mvaddch(y2, x2, ACS_LRCORNER);
-}
-
 void			display_boxes(t_vm *vm)
 {
-	vm->grid_height = MEM_SIZE / FIELD_WIDTH * 3;
-	// draw_rectangle(FIELD_OFFSET_Y + vm->grid_height + 1, LEG_OFFSET_X - 2,
-	// 	FIELD_OFFSET_Y + LEG_HEIGHT + vm->grid_height + 1,
-	// 	LEG_OFFSET_X + LEG_WIDTH + 4);
-	// draw_rectangle(VERB_OFFSET_Y - 1, VERB_OFFSET_X - 2,
-	// 	VERB_OFFSET_Y + vm->grid_height + 1,
-	// 	VERB_OFFSET_X + VERB_WIDTH);
-	// draw_rectangle(INFO_OFFSET_Y - 1, INFO_OFFSET_X - 2,
-	// 	INFO_OFFSET_Y + vm->grid_height + 1,
-	// 	INFO_OFFSET_X + INFO_WIDTH);
-	// draw_rectangle(FIELD_OFFSET_Y - 1, FIELD_OFFSET_X - 2,
-	// 	FIELD_OFFSET_Y + vm->grid_height + 1,
-	// 	FIELD_OFFSET_X + FIELD_WIDTH);
+	int x[6];
+	int y[6];
+	
+	y[0] = FIELD_OFFSET_Y - 1;
+	y[1] = FIELD_OFFSET_Y + (MEM_SIZE / 192 * 3) + 1;
+	x[0] = FIELD_OFFSET_X - 2;
+	x[1] = FIELD_OFFSET_X + FIELD_WIDTH + 1;
+	x[2] = FIELD_OFFSET_X + FIELD_WIDTH + INFO_WIDTH + 1;
+    mvwhline(vm->display.game, y[0], x[0], 0, x[2]-x[0]);
+    mvwhline(vm->display.game, y[1], x[0], 0, x[2]-x[0]);
+    mvwvline(vm->display.game, y[0], x[0], 0, y[1]-y[0]);
+    mvwvline(vm->display.game, y[0], x[1], 0, y[1]-y[0]);
+    mvwvline(vm->display.game, y[0], x[2], 0, y[1]-y[0]);
+	mvwaddch(vm->display.game, y[0], x[0], ACS_ULCORNER);
+	mvwaddch(vm->display.game, y[0], x[1], ACS_URCORNER);
+	mvwaddch(vm->display.game, y[0], x[2], ACS_URCORNER);
+	mvwaddch(vm->display.game, y[1], x[0], ACS_LLCORNER);
+	mvwaddch(vm->display.game, y[1], x[1], ACS_LRCORNER);
+	mvwaddch(vm->display.game, y[1], x[2], ACS_LRCORNER);
 }
 
 void			display_numbers(t_vm *vm)
@@ -52,17 +46,17 @@ void			display_numbers(t_vm *vm)
 	i = 0;
 	while (i < FIELD_WIDTH / 3)
 	{
-		mvwaddch(vm->game, y, x++, '0' + (i / 10 % 10));
-		mvwaddch(vm->game, y, x++, '0' + (i++ % 10));
-		mvwaddch(vm->game, y, x++, ' ');
+		mvwaddch(vm->display.game, y, x++, '0' + (i / 10 % 10));
+		mvwaddch(vm->display.game, y, x++, '0' + (i++ % 10));
+		mvwaddch(vm->display.game, y, x++, ' ');
 	}
 	y += 2;
 	i = 0;
 	while (i < (MEM_SIZE / FIELD_WIDTH * 3) + 1)
 	{	
 		x = FIELD_OFFSET_X - 5;
-		mvwaddch(vm->game, y, x++, '0' + (i / 10 % 10));
-		mvwaddch(vm->game, y++, x, '0' + (i++ % 10));
+		mvwaddch(vm->display.game, y, x++, '0' + (i / 10 % 10));
+		mvwaddch(vm->display.game, y++, x, '0' + (i++ % 10));
 	}
 }
 
@@ -87,10 +81,19 @@ void			init_display(t_vm *vm)
 		clear();
 		start_color();
 		init_colors();
-		vm->game = newwin(LINES, FIELD_WIDTH + INFO_WIDTH, 0, 0);
-		vm->out = newwin(LINES, VERB_WIDTH, 0, VERB_OFFSET_X);
-		scrollok(vm->out, TRUE);
+		getmaxyx(stdscr, vm->display.height, vm->display.width);
+		vm->display.game = newwin(vm->display.height, W_GAME_WIDTH, 0, 0);
+		vm->display.out = newwin(vm->display.height, vm->display.width - W_GAME_WIDTH, 0, W_GAME_WIDTH);
+		scrollok(vm->display.out, TRUE);
 		display_numbers(vm);
 		display_boxes(vm);
+		
+		mvwprintw(vm->display.game, INFO_OFFSET_Y + 30, INFO_OFFSET_X + 1, "CYCLE DELTA    %d", CYCLE_DELTA);
+		vm->display.speed = 10000;
+		
+		keypad(vm->display.out, TRUE);
+		curs_set(0);
+		wrefresh(vm->display.game);
+		wmove(vm->display.out, 0, 0);
 	}
 }

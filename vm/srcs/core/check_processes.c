@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:30:29 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/03 10:44:35 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/12/05 11:26:20 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void	kill_process(t_vm *vm, t_process **ps, t_process *prev)
 		ft_memdel((void*)ps);
 		*ps = prev->next;
 	}
+	--vm->n_process;
 }
 
 void		check_processes(t_vm *vm)
@@ -49,11 +50,11 @@ void		check_processes(t_vm *vm)
 			if (vm->options & VM_OP_C)
 			{
 				put_dead_process(vm, ps->number);
-				//print_val(ps->pc, (unsigned char)vm->field[ps->pc], ps->number, 0);
+				write_val(vm, ps->pc, ps->number, 0);
 			}
 			else
 				ft_putstrnbr("Le processus ", ps->number,
-					" n'a plus 22 donné signe de vie\n");
+					" n'a plus donné signe de vie\n");
 			kill_process(vm, &ps, prev);
 		}
 	}

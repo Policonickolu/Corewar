@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/03 11:59:32 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/03 11:59:32 by hben-yah         ###   ########.fr       */
+/*   Created: 2019/12/05 11:34:46 by hben-yah          #+#    #+#             */
+/*   Updated: 2019/12/05 11:34:46 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,16 @@ void			del_champ_lst(t_champ **lst);
 void			del_process(t_process **process);
 void			del_process_lst(t_process **lst);
 void			del_vm(t_vm *vm);
-void			draw_rectangle(int y1, int x1, int y2, int x2);
+void			get_processes_lives_and_number(t_vm *vm, int number, int *count, int *lives);
+void			display_players(t_vm *vm);
+void			display_infos(t_vm *vm);
 void			display_boxes(t_vm *vm);
 void			display_numbers(t_vm *vm);
 void			init_display(t_vm *vm);
 void			put_dead_process(t_vm *vm, int number);
 void			display_programs(t_vm *vm, t_champ *champ, int pc);
 void			reset_display(t_vm *vm);
+void			write_val(t_vm *vm, int addr, int number, int rev);
 int				no_champion_error(void);
 int				too_many_champions_error(void);
 int				missing_champion_error(void);
@@ -72,7 +75,6 @@ intmax_t			read_field(t_vm *vm, t_process *ps, size_t size);
 intmax_t			read_field_at(t_vm *vm, t_process *ps, intmax_t i, size_t size);
 void			set_carry(t_process *ps, intmax_t value);
 void			set_reg_val(t_process *ps, int reg, intmax_t val);
-void			print_val(int addr, unsigned char val, int number, int rev);
 void			write_field_at(t_vm *vm, t_process *ps, intmax_t i, intmax_t val);
 void			operate_add(t_vm *vm, t_process *ps);
 void			operate_aff(t_vm *vm, t_process *ps);

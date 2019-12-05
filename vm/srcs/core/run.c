@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 15:04:15 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/03 08:35:45 by hben-yah         ###   ########.fr       */
+/*   Updated: 2019/12/05 09:37:11 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	run_vm(t_vm *vm)
 {
 	init_processes(vm);
+	display_infos(vm);
 	while (vm->cycles_to_die > 0 && vm->process)
 	{
 		exec_processes(vm);
@@ -32,8 +33,9 @@ void	run_vm(t_vm *vm)
 			vm->cycles = 0;
 			vm->lives = 0;
 		}
-		display_field(vm);
+		//display_field(vm);
 		++vm->cycles;
 		++vm->total_cycles;
+		display_infos(vm);
 	}
 }
